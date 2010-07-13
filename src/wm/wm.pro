@@ -5,7 +5,6 @@ HEADERS += \
   client.hpp \
   windowmanager.hpp \
   decoration.hpp \
-  anticodecoration.hpp \
   bordersize.hpp \
   debug.hpp
 
@@ -14,7 +13,6 @@ SOURCES += \
   client.cpp \
   main.cpp \
   windowmanager.cpp \
-  anticodecoration.cpp \
   bordersize.cpp \
   debug.cpp \
   decoration.cpp
