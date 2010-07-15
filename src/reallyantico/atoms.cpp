@@ -29,8 +29,6 @@ static const char *atomNames = {
 	"_NET_WM_NAME\0"
 	"_NET_WM_ICON\0"
 
-	"_NET_WM_USER_TIME\0"
-
 	"WM_DELETE_WINDOW\0"
 	"WM_PROTOCOLS\0"
 	"WM_STATE\0"

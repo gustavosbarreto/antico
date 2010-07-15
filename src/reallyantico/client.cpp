@@ -5,16 +5,20 @@
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 
-Client::Client(Qt::HANDLE window, QObject *parent):
-    QObject(parent),
-    m_window(window)
+Client::Client(Qt::HANDLE window, const QString &type, Dockbar *dockBar, Desk *desk):
+    QObject(),
+    m_window(window),
+    m_type(type),
+    m_dockBar(dockBar),
+    m_desk(desk)
 {
-    m_frame = new Frame(window, QString(""), NULL, NULL);
-}
+    m_frame = new Frame(window, type, dockBar, desk);
 
-bool Client::manage(bool isMapped)
-{
-    reparent();
+    XSetWindowAttributes attr;
+    attr.event_mask = ColormapChangeMask | PropertyChangeMask;
+    XChangeWindowAttributes(QX11Info::display(), window, CWEventMask, &attr);
+
+    XGrabServer(QX11Info::display());
 
     updateGeometry();
     updateWMHints();
@@ -22,15 +26,6 @@ bool Client::manage(bool isMapped)
     updateWMProtocols();
     updateIcon();
     updateName();
-
-    m_frame->show();
-    XMapWindow(QX11Info::display(), m_window);
-
-    return true;
-}
-
-bool Client::windowEvent(_XEvent *e)
-{
 }
 
 void Client::updateWindowType()
@@ -183,30 +178,4 @@ void Client::updateName()
             XFree(hint.res_class);
         }
     }
-}
-
-void Client::reparent()
-{
-    XAddToSaveSet(QX11Info::display(), m_window);
-    XSelectInput(QX11Info::display(), m_window, NoEventMask);
-    XUnmapWindow(QX11Info::display(), m_window);
-
-    XSetWindowBorderWidth(QX11Info::display(), m_window, 0);
-    XDefineCursor(QX11Info::display(), m_window, QCursor(Qt::ArrowCursor).handle());
-    XDefineCursor(QX11Info::display(), m_frame->winId(), QCursor(Qt::ArrowCursor).handle());
-    XReparentWindow(QX11Info::display(), m_window, m_frame->winId(), 0, 0);
-    XSelectInput(QX11Info::display(), m_window, SubstructureNotifyMask);
-    
-    XSelectInput(QX11Info::display(), m_frame->winId(), 
-		 KeyPressMask | KeyReleaseMask |
-		 ButtonPressMask | ButtonReleaseMask |
-		 KeymapStateMask |
-		 ButtonMotionMask |
-		 PointerMotionMask | 
-		 EnterWindowMask | LeaveWindowMask |
-		 FocusChangeMask |
-		 ExposureMask |
-		 StructureNotifyMask |
-		 SubstructureRedirectMask |
-		 SubstructureNotifyMask);
 }

@@ -8,9 +8,9 @@
 
 #include <X11/Xdefs.h>
 
+class Dockbar;
+class Desk;
 class Frame;
-
-union _XEvent; // avoid Xlib include
 
 class Client: public QObject
 {
@@ -37,14 +37,10 @@ public:
 	IconicMappingState
     };
 
-    Client(Qt::HANDLE window, QObject *parent);
+    // Somewhere in the future will not need the pointer to DockBar and Desk
+    Client(Qt::HANDLE window, const QString &type, Dockbar *dockBar, Desk *desk);
 
-    bool manage(bool isMapped);
-    bool windowEvent(_XEvent *e);
-
-    inline Qt::HANDLE window() const { return m_window; }
     inline Type windowType() const { return m_windowType; }
-    inline Frame *frame() const { return m_frame; }
 
 private:
     void updateWindowType();
@@ -55,13 +51,13 @@ private:
     void updateIcon();
     void updateName();
 
-    void reparent();
-
     inline bool hasWmProtocol(Atom protocol) { return m_wmProtocols.contains(protocol); }
     
 private:
     Qt::HANDLE m_window;
     QString m_type; // TODO: this is ugly!
+    Dockbar *m_dockBar;
+    Desk *m_desk;
     Frame *m_frame;
 
     Type m_windowType;
