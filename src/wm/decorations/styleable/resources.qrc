@@ -1,5 +1,5 @@
 <RCC>
-<qresource prefix="/decorations/ubuntu/">
+<qresource prefix="/decorations/styleable/">
 	<file>images/close.png</file>
 	<file>images/close_unfocused.png</file>
 	<file>images/minimize.png</file>

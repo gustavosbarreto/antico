@@ -8,7 +8,7 @@
 class QLabel;
 class ButtonContainer;
 
-class TitleBar: public QWidget
+class TitleBar: public QFrame
 {
     Q_OBJECT
 

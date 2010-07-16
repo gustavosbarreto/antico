@@ -10,7 +10,7 @@
 #include <QApplication>
 
 TitleBar::TitleBar(QWidget *parent):
-    QWidget(parent)
+    QFrame(parent)
 {
     setMouseTracking(true);
 
@@ -33,7 +33,7 @@ TitleBar::TitleBar(QWidget *parent):
     _title->setMouseTracking(true);
     _title->setFont(f);
     _title->setPalette(pal);
-    _title->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    _title->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 
     layout->addWidget(_buttonContainer);
     layout->addWidget(_title);
@@ -74,4 +74,6 @@ void TitleBar::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::NoPen);
     painter.setBrush(grad);
     painter.drawRect(rect());
+
+    QFrame::paintEvent(event);
 }

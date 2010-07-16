@@ -27,7 +27,7 @@ ButtonContainer::ButtonContainer(QWidget *parent):
     layout->addWidget(button(StyleableDecoration::MinimizeButton));
     layout->addWidget(button(StyleableDecoration::MaximizeButton));
 
-    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 }
 
 void ButtonContainer::setActive(bool active)
