@@ -18,9 +18,6 @@ public:
 
     void setActive(bool active);
 
-protected:
-    virtual void paintEvent(QPaintEvent *event);
-
 private:
     void addButton(StyleableDecoration::ButtonType type);
     inline TitleBarButton *button(StyleableDecoration::ButtonType type) { return _buttons.value(type); }

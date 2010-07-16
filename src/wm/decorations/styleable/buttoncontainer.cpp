@@ -10,6 +10,7 @@
 ButtonContainer::ButtonContainer(QWidget *parent):
     QFrame(parent)
 {
+    setObjectName("ButtonContainer");
     setMouseTracking(true);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -34,20 +35,6 @@ void ButtonContainer::setActive(bool active)
 {
     foreach (TitleBarButton *button, _buttons)
 	button->setActive(active);
-}
-
-void ButtonContainer::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    QLinearGradient grad(QPointF(rect().left(), rect().top()), QPointF(rect().left(), rect().bottom()));
-    grad.setColorAt(0, QColor(60, 59, 55));
-    grad.setColorAt(0.5, QColor(107, 106, 99));
-
-    painter.setPen(Qt::transparent);
-    painter.setBrush(grad);
-    painter.drawRoundedRect(rect(), 10, 10);
 }
 
 void ButtonContainer::addButton(StyleableDecoration::ButtonType type)

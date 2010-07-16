@@ -11,3 +11,10 @@
                                 stop: 0.0 rgb(107, 106, 99),
                                 stop: 0.5 rgb(60, 59, 55));
 }
+
+#ButtonContainer {
+    border-radius: 10px;
+    background: qlineargradient(x1: 0, y1:0, x2: 0, y2: 1,
+                                stop: 0.0 rgb(60, 59, 55),
+                                stop: 0.5 rgb(107, 106, 99));
+}
