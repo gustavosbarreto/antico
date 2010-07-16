@@ -19,9 +19,6 @@ public:
 
     void setActive(bool active);
 
-protected:
-    virtual void paintEvent(QPaintEvent *event);
-
 private:
     ButtonContainer *_buttonContainer;
     QLabel *_title;
