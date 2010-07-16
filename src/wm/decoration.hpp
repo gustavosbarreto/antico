@@ -3,12 +3,12 @@
 
 #include "bordersize.hpp"
 
-#include <QFrame>
+#include <QWidget>
 
 class Client;
 union _XEvent;
 
-class Decoration: public QFrame
+class Decoration: public QWidget
 {
     Q_OBJECT
 
