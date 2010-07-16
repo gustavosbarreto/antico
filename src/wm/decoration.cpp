@@ -9,7 +9,7 @@
 #include <X11/Xlib.h>
 
 Decoration::Decoration(Client *c)
-    : QWidget()
+    : QFrame()
     , _client(c)
     , _hoverResizeArea(false)
     , _resizeCursorPosition(NoneCursorPosition)
