@@ -40,6 +40,7 @@ private:
 
 private:
     Qt::HANDLE _winId;
+    QWidget *_wrapper;
     Decoration *_decoration;
     QString _title;
     QRect _geometry;

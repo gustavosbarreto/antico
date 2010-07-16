@@ -8,6 +8,7 @@
 
 #include <QX11Info>
 #include <QDebug>
+#include <QHBoxLayout>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -32,14 +33,22 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
       Once compiled it will not be possible to change the decoration unless the decoration be a engine (like KWin)
     */
 
-    _decoration = new StyleableDecoration(this);
+    _wrapper = new QWidget;
+    _decoration = new StyleableDecoration(this, _wrapper);
+
+    QHBoxLayout *l = new QHBoxLayout(_wrapper);
+    l->setMargin(0);
+    l->addWidget(_decoration);
+
+    XReparentWindow(QX11Info::display(), _decoration->winId(), _wrapper->winId(), 0, 0);
+
 
     // Allow composited clients
     if (WindowManager::self()->compositeManagerIsRunning())
-        _decoration->setAttribute(Qt::WA_TranslucentBackground);
+        _wrapper->setAttribute(Qt::WA_TranslucentBackground);
 
     XSetWindowBorderWidth(QX11Info::display(), _winId, 0);
-    XSetWindowBorderWidth(QX11Info::display(), _decoration->winId(), 0);
+    XSetWindowBorderWidth(QX11Info::display(), _wrapper->winId(), 0);
     XReparentWindow(QX11Info::display(), _winId, _decoration->winId(),
                     _decoration->borderSize().left(),
                     _decoration->borderSize().top() + _decoration->borderSize().titleBarHeight());
@@ -49,9 +58,9 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
                 ButtonPressMask | ButtonReleaseMask,
                 GrabModeSync, GrabModeAsync, None, None);
 
-    _decoration->setGeometry(_geometry.x(), _geometry.y(),
-                             _geometry.width() + _decoration->borderSize().measuredWidth(),
-                             _geometry.height() + _decoration->borderSize().measuredHeight());
+    _wrapper->setGeometry(_geometry.x(), _geometry.y(),
+                          _geometry.width() + _decoration->borderSize().measuredWidth(),
+                          _geometry.height() + _decoration->borderSize().measuredHeight());
 
     qDebug() << __PRETTY_FUNCTION__ << "Decoration window geometry" << _decoration->geometry();
 
@@ -76,6 +85,8 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
 
 Client::~Client()
 {
+    _wrapper->close();
+    _wrapper->deleteLater();
     _decoration->close();
     _decoration->deleteLater();
 }
@@ -139,7 +150,7 @@ void Client::move(const QPoint &p)
 {
     qDebug() << __PRETTY_FUNCTION__ << "Move to" << p;
 
-    _decoration->move(p.x(), p.y());
+    _wrapper->move(p.x(), p.y());
 
     XConfigureEvent e;
     e.type = ConfigureNotify;
@@ -161,9 +172,9 @@ void Client::resize(const QSize &size, int gravity)
 {
     qDebug() << __PRETTY_FUNCTION__ << "resize to" << size;
 
-    QSize currentSize = _decoration->size();
-    int x = _decoration->x();
-    int y = _decoration->y();
+    QSize currentSize = _wrapper->size();
+    int x = _wrapper->x();
+    int y = _wrapper->y();
 
     switch (gravity)
     {
@@ -199,7 +210,7 @@ void Client::resize(const QSize &size, int gravity)
     a.win_gravity = StaticGravity;
     XChangeWindowAttributes(QX11Info::display(), _winId, CWWinGravity, &a);
 
-    _decoration->setGeometry(x, y, size.width(), size.height());
+    _wrapper->setGeometry(x, y, size.width(), size.height());
 
     BorderSize border = _decoration->borderSize();
     XMoveResizeWindow(QX11Info::display(), _winId,
@@ -233,7 +244,7 @@ void Client::setInactive()
 
 void Client::map()
 {
-    _decoration->show();
+    _wrapper->show();
     XMapWindow(QX11Info::display(), _winId);
     XSync(QX11Info::display(), False);
 }

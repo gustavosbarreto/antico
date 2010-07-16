@@ -27,7 +27,7 @@ public:
         BottomRightCursorPosition
     };
 
-    Decoration(Client *c);
+    Decoration(Client *c, QWidget *parent);
 
     virtual bool x11EventFilter(_XEvent *e);
 

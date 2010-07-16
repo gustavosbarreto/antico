@@ -8,8 +8,8 @@
 
 #include <X11/Xlib.h>
 
-Decoration::Decoration(Client *c)
-    : QFrame()
+Decoration::Decoration(Client *c, QWidget *parent)
+    : QFrame(parent)
     , _client(c)
     , _hoverResizeArea(false)
     , _resizeCursorPosition(NoneCursorPosition)

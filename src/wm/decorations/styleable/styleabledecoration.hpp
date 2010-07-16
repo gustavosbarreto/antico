@@ -17,7 +17,7 @@ public:
         MaximizeButton
     };
 
-    StyleableDecoration(Client *c);
+    StyleableDecoration(Client *c, QWidget *parent);
 
     BorderSize borderSize() const;
 

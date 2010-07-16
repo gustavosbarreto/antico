@@ -8,8 +8,8 @@
 #include <QPainter>
 #include <QLinearGradient>
 
-StyleableDecoration::StyleableDecoration(Client *c)
-    : Decoration(c)
+StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
+    : Decoration(c, parent)
 {
     setObjectName("Frame");
 
