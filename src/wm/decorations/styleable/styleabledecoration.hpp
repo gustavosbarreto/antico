@@ -26,9 +26,6 @@ public:
     void setActive();
     void setInactive();
 
-protected:
-    virtual void paintEvent(QPaintEvent *e);
-
 private slots:
     void buttonClicked(StyleableDecoration::ButtonType button);
 

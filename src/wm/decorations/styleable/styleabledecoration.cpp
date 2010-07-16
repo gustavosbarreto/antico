@@ -11,6 +11,8 @@
 StyleableDecoration::StyleableDecoration(Client *c)
     : Decoration(c)
 {
+    setObjectName("Frame");
+
     _titleBar = new TitleBar(this);
     _titleBar->setFixedHeight(borderSize().titleBarHeight());
     connect(_titleBar, SIGNAL(buttonClicked(StyleableDecoration::ButtonType)),
@@ -45,22 +47,6 @@ void StyleableDecoration::setActive()
 void StyleableDecoration::setInactive()
 {
     _titleBar->setActive(false);
-}
-
-void StyleableDecoration::paintEvent(QPaintEvent *e)
-{
-    QPainter painter(this);
-
-    painter.setPen(QColor(60, 59, 55));
-
-    // top-left to bottom-left
-    painter.drawLine(QPoint(0, 0), QPoint(0, rect().height()));
-    // bottom-left to bottom-right
-    painter.drawLine(QPoint(0, rect().height() - 1), QPoint(rect().width(), rect().height() - 1));
-    // bottom-right to top-right
-    painter.drawLine(QPoint(rect().width() - 1, rect().height() - 1), QPoint(rect().width() - 1, 0));
-    // top-right to top-left
-    painter.drawLine(QPoint(rect().width() - 1, 0), QPoint(0, 0));
 }
 
 void StyleableDecoration::buttonClicked(StyleableDecoration::ButtonType button)
