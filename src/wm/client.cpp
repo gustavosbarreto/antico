@@ -2,7 +2,6 @@
 #include "windowmanager.hpp"
 #include "decorations/ubuntu/ubuntudecoration.hpp"
 #include "decorations/panther/pantherdecoration.hpp"
-#include "decorations/styleable/styleabledecoration.hpp"
 #include "atoms.hpp"
 #include "fixx11h.h"
 
@@ -32,7 +31,7 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
       Once compiled it will not be possible to change the decoration unless the decoration be a engine (like KWin)
     */
 
-    _decoration = new StyleableDecoration(this);
+    _decoration = new UbuntuDecoration(this);
 
     // Allow composited clients
     if (WindowManager::self()->compositeManagerIsRunning())

@@ -1,3 +1,2 @@
-#include(ubuntu/ubuntu.pri)
-include(styleable/styleable.pri)
+include(ubuntu/ubuntu.pri)
 #include(panther/panther.pri)
