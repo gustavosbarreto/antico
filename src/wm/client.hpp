@@ -26,6 +26,7 @@ public:
     void setInactive();
 
     inline Decoration *decoration() const { return _decoration; }
+    inline QWidget *wrapper() const { return _wrapper; }
 
     inline Qt::HANDLE winId() const { return _winId; }
     inline QRect geometry() const { return _geometry; }
