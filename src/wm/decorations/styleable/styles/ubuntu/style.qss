@@ -12,6 +12,14 @@
                                 stop: 0.5 rgb(60, 59, 55));
 }
 
+#TitleBar[active="true"] #TitleText {
+    color: rgb(223, 223, 223);
+}
+
+#TitleBar[active="false"] #TitleText {
+    color: rgb(153, 149, 139);
+}
+
 #ButtonContainer {
     border-radius: 10px;
     background: qlineargradient(x1: 0, y1:0, x2: 0, y2: 1,

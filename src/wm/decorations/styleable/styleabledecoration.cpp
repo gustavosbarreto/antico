@@ -9,6 +9,8 @@
 #include <QLinearGradient>
 #include <QSettings>
 #include <QFileInfo>
+#include <QStyle>
+#include <QDebug>
 
 StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     : Decoration(c, parent)
@@ -50,14 +52,23 @@ void StyleableDecoration::setTitle(const QString &title)
     _titleBar->setTitle(title);
 }
 
+bool StyleableDecoration::active()
+{
+    return _active;
+}
+
 void StyleableDecoration::setActive()
 {
+    _active = true;
     _titleBar->setActive(true);
+    style()->polish(this);
 }
 
 void StyleableDecoration::setInactive()
 {
+    _active = false;
     _titleBar->setActive(false);
+    style()->polish(this);
 }
 
 void StyleableDecoration::buttonClicked(StyleableDecoration::ButtonType button)

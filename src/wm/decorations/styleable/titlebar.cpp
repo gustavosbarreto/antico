@@ -8,6 +8,7 @@
 #include <QBitmap>
 #include <QDebug>
 #include <QApplication>
+#include <QStyle>
 
 TitleBar::TitleBar(QWidget *parent):
     QFrame(parent)
@@ -31,6 +32,7 @@ TitleBar::TitleBar(QWidget *parent):
     pal.setColor(QPalette::WindowText, QColor(223, 223, 223));
 
     _title = new QLabel(this);
+    _title->setObjectName("TitleText");
     _title->setMouseTracking(true);
     _title->setFont(f);
     _title->setPalette(pal);
@@ -45,20 +47,16 @@ void TitleBar::setTitle(const QString &title)
     _title->setText(title);
 }
 
+bool TitleBar::active()
+{
+    return _active;
+}
+
 void TitleBar::setActive(bool active)
 {
-    if (active)
-    {
-        QPalette pal(palette());
-        pal.setColor(QPalette::WindowText, QColor(223, 223, 223));
-        _title->setPalette(pal);
-    }
-    else
-    {
-        QPalette pal(palette());
-        pal.setColor(QPalette::WindowText, QColor(153, 149, 139));
-        _title->setPalette(pal);
-    }
-
+    _active = active;
     _buttonContainer->setActive(active);
+
+    style()->polish(this);
+    style()->polish(_title);
 }

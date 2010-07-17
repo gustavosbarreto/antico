@@ -8,6 +8,7 @@ class TitleBar;
 class StyleableDecoration: public Decoration
 {
     Q_OBJECT
+    Q_PROPERTY(bool active READ active)
 
 public:
     enum ButtonType
@@ -23,6 +24,7 @@ public:
 
     void setTitle(const QString &title);
 
+    bool active();
     void setActive();
     void setInactive();
 
@@ -31,6 +33,7 @@ private slots:
 
 private:
     TitleBar *_titleBar;
+    bool _active;
 };
 
 #endif
