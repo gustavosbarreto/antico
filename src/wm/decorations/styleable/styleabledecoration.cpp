@@ -11,9 +11,16 @@
 #include <QFileInfo>
 #include <QStyle>
 #include <QDebug>
+#include <QTimer>
+#include <QCoreApplication>
 
 StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     : Decoration(c, parent)
+    , _borderLeftWidth(0)
+    , _borderTopWidth(0)
+    , _borderRightWidth(0)
+    , _borderBottomWidth(0)
+    , _titleBarHeight(0)
 {
     setObjectName("Frame");
 
@@ -25,6 +32,8 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     QFile file(style + "/style.qss");
     file.open(QFile::ReadOnly);
     setStyleSheet(file.readAll());
+
+    QCoreApplication::sendPostedEvents(this, 0);
 
     _titleBar = new TitleBar(this);
     _titleBar->setFixedHeight(borderSize().titleBarHeight());
@@ -44,7 +53,8 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
 
 BorderSize StyleableDecoration::borderSize() const
 {
-    return BorderSize(1, 3, 3, 3, 28);
+    return BorderSize(borderTopWidth(), borderBottomWidth(),
+                      borderLeftWidth(), borderRightWidth(), titleBarHeight());
 }
 
 void StyleableDecoration::setTitle(const QString &title)
