@@ -12,9 +12,29 @@ class TitleBarButton;
 class ButtonContainer: public QFrame
 {
     Q_OBJECT
+    Q_PROPERTY(int marginLeft READ marginLeft WRITE setMarginLeft);
+    Q_PROPERTY(int marginTop READ marginTop WRITE setMarginTop);
+    Q_PROPERTY(int marginRight READ marginRight WRITE setMarginRight);
+    Q_PROPERTY(int marginBottom READ marginBottom WRITE setMarginBottom);
+    Q_PROPERTY(int spacing READ spacing WRITE setSpacing);
 
 public:
     ButtonContainer(QWidget *parent);
+
+    inline int marginLeft() const { return _marginLeft; }
+    inline void setMarginLeft(int value) { _marginLeft = value; }
+
+    inline int marginTop() const { return _marginTop; }
+    inline void setMarginTop(int value) { _marginTop = value; }
+
+    inline int marginRight() const { return _marginRight; }
+    inline void setMarginRight(int value) { _marginRight = value; }
+
+    inline int marginBottom() const { return _marginBottom; }
+    inline void setMarginBottom(int value) { _marginBottom = value; }
+
+    inline int spacing() const { return _spacing; }
+    inline void setSpacing(int value) { _spacing = value; }
 
     void setActive(bool active);
 
@@ -28,6 +48,12 @@ private slots:
 private:
     QMap<StyleableDecoration::ButtonType, TitleBarButton *> _buttons;
     QSignalMapper *_signalMapper;
+
+    int _marginLeft;
+    int _marginTop;
+    int _marginRight;
+    int _marginBottom;
+    int _spacing;
 
 signals:
     void clicked(StyleableDecoration::ButtonType);

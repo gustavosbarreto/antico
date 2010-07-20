@@ -5,17 +5,25 @@
 #include <QLabel>
 #include <QPainter>
 #include <QSignalMapper>
+#include <QCoreApplication>
 #include <QDebug>
 
-ButtonContainer::ButtonContainer(QWidget *parent):
-    QFrame(parent)
+ButtonContainer::ButtonContainer(QWidget *parent)
+    : QFrame(parent)
+    , _marginLeft(0)
+    , _marginTop(0)
+    , _marginRight(0)
+    , _marginBottom(0)
+    , _spacing(0)
 {
     setObjectName("ButtonContainer");
     setMouseTracking(true);
 
+    QCoreApplication::sendPostedEvents(this, 0);
+
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setSpacing(1);
-    layout->setContentsMargins(0, 3, 0, 1);
+    layout->setSpacing(spacing());
+    layout->setContentsMargins(marginLeft(), marginTop(), marginRight(), marginBottom());
 
     _signalMapper = new QSignalMapper(this);
     connect(_signalMapper, SIGNAL(mapped(int)), SLOT(buttonClicked(int)));
