@@ -2,7 +2,8 @@
 #include "decoration.hpp"
 #include "client.hpp"
 #include "atoms.hpp"
-#include "debug.hpp"
+
+#include <lib/debug.hpp>
 
 #include <fixx11h.h>
 #include <QDebug>

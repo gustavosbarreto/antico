@@ -1,7 +1,7 @@
 #ifndef _DECORATION_HPP
 #define _DECORATION_HPP
 
-#include "bordersize.hpp"
+#include <lib/bordersize.hpp>
 
 #include <QFrame>
 
