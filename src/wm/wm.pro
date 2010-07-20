@@ -6,7 +6,6 @@ HEADERS += \
   client.hpp \
   windowmanager.hpp \
   decoration.hpp
-
 SOURCES += \
   client.cpp \
   main.cpp \

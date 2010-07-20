@@ -1,5 +1,6 @@
 #include "client.hpp"
 #include "windowmanager.hpp"
+#include "customizedecorationwidget.hpp"
 #include "decorations/ubuntu/ubuntudecoration.hpp"
 #include "decorations/panther/pantherdecoration.hpp"
 #include "decorations/styleable/styleabledecoration.hpp"
@@ -32,6 +33,8 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
       Yes. I know it is ugly but there are no plans to add support for dynamic plugins (the custom decoration would be a dynamic library).
       Once compiled it will not be possible to change the decoration unless the decoration be a engine (like KWin)
     */
+
+    (new CustomizeDecorationWidget)->show();
 
     _wrapper = new QWidget;
     _decoration = new StyleableDecoration(this, _wrapper);
