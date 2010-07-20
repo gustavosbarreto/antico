@@ -3,18 +3,20 @@
 
 #include <QFrame>
 
+class FakeWindow;
+
 class StylePreviewFrame: public QFrame
 {
     Q_OBJECT
 
 public:
-    StylePreviewFrame(QWidget *parent);
+    StylePreviewFrame(const QString &fileName, QWidget *parent);
 
 protected:
     virtual void resizeEvent(QResizeEvent *e);
 
 private:
-    QWidget *_window;
+    FakeWindow *_window;
 };
 
 #endif

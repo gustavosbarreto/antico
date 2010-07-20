@@ -10,6 +10,8 @@ class FakeWindow: public QWidget
 public:
     FakeWindow(QWidget *parent);
 
+    inline Decoration *decoration() const { return _decoration; }
+
 protected:
     virtual void resizeEvent(QResizeEvent *e);
 
