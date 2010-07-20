@@ -10,15 +10,18 @@ ScrollAreaWidget::ScrollAreaWidget(QWidget *parent)
     layout->setSpacing(9);
     layout->addStretch();
     setLayout(layout);
+
+    setStyleSheet("ScrollAreaWidget { background-color: palette(base); }");
 }
 
 void ScrollAreaWidget::paintEvent(QPaintEvent *e)
 {
-    QPainter painter(this);
+    QWidget::paintEvent(e);
+//    QPainter painter(this);
 
-    QRect r(0, 0, rect().width(), rect().height());
+/*    QRect r(0, 0, rect().width(), rect().height());
     QPixmap pixmap = QPixmap(":/configapplet/images/bg.png").scaled(r.width(), r.height(),
                                                                     Qt::IgnoreAspectRatio,
                                                                     Qt::SmoothTransformation);
-    painter.drawPixmap(r, pixmap, r);
+                                                                    painter.drawPixmap(r, pixmap, r);*/
 }

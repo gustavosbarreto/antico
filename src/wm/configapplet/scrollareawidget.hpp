@@ -5,6 +5,8 @@
 
 class ScrollAreaWidget: public QWidget
 {
+    Q_OBJECT
+
 public:
     ScrollAreaWidget(QWidget *parent);
 

@@ -4,6 +4,7 @@
 
 #include <QFile>
 #include <QResizeEvent>
+#include <QCoreApplication>
 
 StylePreviewFrame::StylePreviewFrame(const QString &fileName, QWidget *parent)
     : QFrame(parent)
@@ -15,8 +16,9 @@ StylePreviewFrame::StylePreviewFrame(const QString &fileName, QWidget *parent)
     _window->decoration()->setStyleSheet(file.readAll());
     _window->show();
 
-    setStyleSheet("StylePreviewFrame { border-radius: 4; background-color: rgba(255, 255, 255, 100); }");
+    QCoreApplication::sendPostedEvents(_window->decoration(), 0);
 
+    setCursor(Qt::PointingHandCursor);
     setFixedHeight(156);
 }
 

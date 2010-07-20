@@ -1,5 +1,0 @@
-<RCC>
-  <qresource prefix="/configapplet">
-    <file>images/bg.png</file>
-  </qresource>
-</RCC>

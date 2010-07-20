@@ -7,8 +7,6 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += ../
 
-RESOURCES += configappletresources.qrc
-
 include(../decorations/decorations.pri)
 
 # Input

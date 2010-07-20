@@ -2,6 +2,7 @@
 #include "decorations/styleable/styleabledecoration.hpp"
 
 #include <QHBoxLayout>
+#include <QDebug>
 
 FakeWindow::FakeWindow(QWidget *parent)
     : QWidget(parent)
@@ -12,7 +13,6 @@ FakeWindow::FakeWindow(QWidget *parent)
 
     _centralWidget = new QWidget(_decoration);
     _centralWidget->setStyleSheet("background-color: palette(window);");
-    _centralWidget->move(borderSize.left(), borderSize.top() + borderSize.titleBarHeight());
     _centralWidget->show();
 
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -25,6 +25,8 @@ void FakeWindow::resizeEvent(QResizeEvent *e)
 {
     BorderSize borderSize = _decoration->borderSize();
 
+    _centralWidget->move(borderSize.left(),
+                         borderSize.top() + borderSize.titleBarHeight());
     _centralWidget->resize(size().width() - borderSize.measuredWidth(),
                            size().height() - borderSize.measuredHeight());
 }
