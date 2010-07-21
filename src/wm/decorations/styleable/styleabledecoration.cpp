@@ -24,14 +24,14 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
 {
     setObjectName("Frame");
 
-/*    QSettings settings(QSettings::UserScope, "antico", "wm", this);
+    QSettings settings(QSettings::UserScope, "antico", "wm", this);
     QString style = settings.value("Style/Path").toString();
     if (style.isEmpty() || !QFileInfo(style).isDir() || !QFile::exists(style + "/style.qss"))
         qFatal("Missing style: You must read the README file");
 
     QFile file(style + "/style.qss");
     file.open(QFile::ReadOnly);
-    setStyleSheet(file.readAll());*/
+    setStyleSheet(file.readAll());
 }
 
 void StyleableDecoration::init()
