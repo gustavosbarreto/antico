@@ -14,6 +14,7 @@ StylePreviewFrame::StylePreviewFrame(const QString &fileName, QWidget *parent)
 
     _window = new FakeWindow(this);
     _window->decoration()->setStyleSheet(file.readAll());
+    _window->decoration()->init();
     _window->show();
 
     QCoreApplication::sendPostedEvents(_window->decoration(), 0);

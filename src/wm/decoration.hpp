@@ -29,6 +29,8 @@ public:
 
     Decoration(Client *c, QWidget *parent);
 
+    virtual void init() = 0;
+
     virtual bool x11EventFilter(_XEvent *e);
 
     virtual BorderSize borderSize() const = 0;

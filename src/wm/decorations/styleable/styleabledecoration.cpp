@@ -24,15 +24,18 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
 {
     setObjectName("Frame");
 
-    QSettings settings(QSettings::UserScope, "antico", "wm", this);
+/*    QSettings settings(QSettings::UserScope, "antico", "wm", this);
     QString style = settings.value("Style/Path").toString();
     if (style.isEmpty() || !QFileInfo(style).isDir() || !QFile::exists(style + "/style.qss"))
         qFatal("Missing style: You must read the README file");
 
     QFile file(style + "/style.qss");
     file.open(QFile::ReadOnly);
-    setStyleSheet(file.readAll());
+    setStyleSheet(file.readAll());*/
+}
 
+void StyleableDecoration::init()
+{
     QCoreApplication::sendPostedEvents(this, 0);
 
     _titleBar = new TitleBar(this);
@@ -41,10 +44,7 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
             SLOT(buttonClicked(StyleableDecoration::ButtonType)));
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(borderSize().left() - 2, // expand 2px
-                               borderSize().top(),
-                               borderSize().right() - 2, // expand 2px
-                               borderSize().bottom());
+    layout->setContentsMargins(borderSize().left(), borderSize().top(), borderSize().right(), borderSize().bottom());
     layout->addWidget(_titleBar);
     layout->addStretch();
 

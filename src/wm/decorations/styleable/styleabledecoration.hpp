@@ -25,6 +25,8 @@ public:
 
     StyleableDecoration(Client *c, QWidget *parent);
 
+    virtual void init();
+
     inline int borderLeftWidth() const { return _borderLeftWidth; }
     inline void setBorderLeftWidth(int value) { _borderLeftWidth = value; }
 
