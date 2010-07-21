@@ -24,7 +24,7 @@ bool Decoration::x11EventFilter(_XEvent *e)
 
 void Decoration::mousePressEvent(QMouseEvent *e)
 {
-//    WindowManager::self()->setActiveClient(client());
+    WindowManager::self()->setActiveClient(client());
 
     setMoveOffset(e->pos());
     _resizeCursorPosition = cursorPosition(e->pos());
@@ -49,7 +49,7 @@ void Decoration::mouseMoveEvent(QMouseEvent *e)
         if (!_hoverResizeArea)
         {
             QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-//            client()->move(mapToGlobal(e->pos()) - moveOffset());
+            client()->move(mapToGlobal(e->pos()) - moveOffset());
         }
         else // Resizing the window
         {

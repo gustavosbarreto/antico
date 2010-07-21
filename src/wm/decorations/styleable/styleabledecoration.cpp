@@ -86,15 +86,15 @@ void StyleableDecoration::buttonClicked(StyleableDecoration::ButtonType button)
     switch (button)
     {
         case CloseButton:
-//            client()->close();
+            client()->close();
             break;
 
         case MinimizeButton:
-//            client()->minimize();
+            client()->minimize();
             break;
 
         case MaximizeButton:
-//            client()->maximize();
+            client()->maximize();
             break;
     }
 }
