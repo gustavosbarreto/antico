@@ -24,7 +24,7 @@ bool Decoration::x11EventFilter(_XEvent *e)
 
 void Decoration::mousePressEvent(QMouseEvent *e)
 {
-    WindowManager::self()->setActiveClient(client());
+    client()->setActive();
 
     setMoveOffset(e->pos());
     _resizeCursorPosition = cursorPosition(e->pos());

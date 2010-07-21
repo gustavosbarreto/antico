@@ -120,8 +120,6 @@ void WindowManager::setActiveClient(Client *client)
         if (c == client)
         {
             XRaiseWindow(QX11Info::display(), client->wrapper()->winId());
-
-            c->setActive();
         }
         else
             c->setInactive();

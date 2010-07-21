@@ -35,6 +35,7 @@ Client::Client(Qt::HANDLE winId, QObject *parent)
 
     _wrapper = new QWidget;
     _decoration = new StyleableDecoration(this, _wrapper);
+    _decoration->init();
 
     QHBoxLayout *l = new QHBoxLayout(_wrapper);
     l->setMargin(0);
@@ -232,6 +233,8 @@ void Client::close()
 
 void Client::setActive()
 {
+    WindowManager::self()->setActiveClient(this);
+
     _decoration->setActive();
     _decoration->update();
 }
