@@ -7,9 +7,10 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += ../
 
+include(../lib/lib.pri)
 include(../decorations/decorations.pri)
 
 # Input
-HEADERS += mainpage.hpp fakewindow.hpp ../decoration.hpp ../bordersize.hpp scrollareawidget.hpp stylepreviewframe.hpp
+HEADERS += mainpage.hpp fakewindow.hpp ../decoration.hpp scrollareawidget.hpp stylepreviewframe.hpp
 FORMS += mainpage.ui
-SOURCES += mainpage.cpp fakewindow.cpp main.cpp ../decoration.cpp ../bordersize.cpp scrollareawidget.cpp stylepreviewframe.cpp
+SOURCES += mainpage.cpp fakewindow.cpp main.cpp ../decoration.cpp scrollareawidget.cpp stylepreviewframe.cpp
