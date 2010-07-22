@@ -1,5 +1,7 @@
 <RCC>
 <qresource prefix="/styles/Ubuntu/">
+	<file>style.qss</file>
+	<file>info.ini</file>
 	<file>images/close.png</file>
 	<file>images/close_unfocused.png</file>
 	<file>images/minimize.png</file>
