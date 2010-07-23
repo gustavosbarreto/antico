@@ -25,6 +25,36 @@
     color: rgb(153, 149, 139);
 }
 
+#TitleBar #CloseButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/close.png);
+}
+
+#TitleBar[active="false"] #CloseButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/close_unfocused.png);
+}
+
+#TitleBar #MinimizeButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/minimize.png);
+}
+
+#TitleBar[active="false"] #MinimizeButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/minimize_unfocused.png);
+}
+
+#TitleBar #MaximizeButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/maximize.png);
+}
+
+#TitleBar[active="false"] #MaximizeButton
+{
+    qproperty-pixmap: url(:/decorations/styleable/images/maximize_unfocused.png);
+}
+
 #ButtonContainer {
     qproperty-marginLeft: 0;
     qproperty-marginTop: 3;
