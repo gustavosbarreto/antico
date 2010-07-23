@@ -10,12 +10,15 @@ TitleBarButton::TitleBarButton(StyleableDecoration::ButtonType type, QWidget *pa
     switch (type)
     {
         case StyleableDecoration::CloseButton:
+            setObjectName("CloseButton");
             setToolTip(trUtf8("Close"));
             break;
         case StyleableDecoration::MinimizeButton:
+            setObjectName("MinimizeButton");
             setToolTip(trUtf8("Minimize"));
             break;
         case StyleableDecoration::MaximizeButton:
+            setObjectName("MaximizeButton");
             setToolTip(trUtf8("Maximize"));
             break;
     }
