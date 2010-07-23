@@ -46,7 +46,7 @@ DecorationStyleLoader::DecorationStyleLoader(const QString &file)
         return;
     }
 
-    _styleRootPath = styleResource.absoluteFilePath() + "style.qss";
+    _styleRootPath = styleResource.absoluteFilePath();
 }
 
 DecorationStyleLoader:: DecorationStyleLoader(const DecorationStyleLoader &other)
@@ -59,9 +59,10 @@ DecorationStyleLoader:: DecorationStyleLoader(const DecorationStyleLoader &other
 }
 
 const QString DecorationStyleLoader::styleSheet() const
-{        
-    qResource resource(_styleRootPath + "style.qss");
-    return QString(reinterpret_cast<const char *>(resource.data()));
+{
+    QFile file(_styleRootPath + "style.qss");
+    file.open(QFile::ReadOnly);
+    return file.readAll();
 }
 
 QList<DecorationStyleLoader> DecorationStyleLoader::styles()

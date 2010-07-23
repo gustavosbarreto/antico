@@ -14,6 +14,8 @@
 #include <QTimer>
 #include <QCoreApplication>
 
+#include "decorationstyleloader.hpp"
+
 StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     : Decoration(c, parent)
     , _borderLeftWidth(0)
@@ -25,13 +27,17 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     setObjectName("Frame");
 
     QSettings settings(QSettings::UserScope, "antico", "wm", this);
-    QString style = settings.value("Style/Path").toString();
-    if (style.isEmpty() || !QFileInfo(style).isDir() || !QFile::exists(style + "/style.qss"))
-        qFatal("Missing style: You must read the README file");
 
-    QFile file(style + "/style.qss");
-    file.open(QFile::ReadOnly);
-    setStyleSheet(file.readAll());
+    QString stylePath = settings.value("Style/Path").toString();
+    if (!QFile::exists(stylePath))
+        qFatal("Please, launch the configapplet to choose a style");
+
+    DecorationStyleLoader loader(stylePath);
+
+    if (!loader.isValid())
+        qFatal("Invalid theme file format");
+
+    setStyleSheet(loader.styleSheet());
 }
 
 void StyleableDecoration::init()

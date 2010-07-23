@@ -11,5 +11,3 @@ HEADERS += \
   $$PWD/titlebarbutton.hpp \
   $$PWD/buttoncontainer.hpp \
   $$PWD/decorationstyleloader.hpp
-
-RESOURCES += $$PWD/resources.qrc

@@ -1,5 +1,7 @@
 #include "titlebarbutton.hpp"
 
+#include <QStyle>
+
 TitleBarButton::TitleBarButton(StyleableDecoration::ButtonType type, QWidget *parent)
     : QLabel(parent)
     , _type(type)
@@ -26,6 +28,7 @@ TitleBarButton::TitleBarButton(StyleableDecoration::ButtonType type, QWidget *pa
 
 void TitleBarButton::setActive(bool active)
 {
+    style()->polish(this);
 }
 
 void TitleBarButton::mousePressEvent(QMouseEvent *event)

@@ -25,34 +25,34 @@
     color: rgb(153, 149, 139);
 }
 
-#TitleBar #CloseButton
+#TitleBar[active="true"] #CloseButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/close.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/close.png);
 }
 
 #TitleBar[active="false"] #CloseButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/close_unfocused.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/close_unfocused.png);
 }
 
-#TitleBar #MinimizeButton
+#TitleBar[active="true"] #MinimizeButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/minimize.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/minimize.png);
 }
 
 #TitleBar[active="false"] #MinimizeButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/minimize_unfocused.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/minimize_unfocused.png);
 }
 
-#TitleBar #MaximizeButton
+#TitleBar[active="true"] #MaximizeButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/maximize.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/maximize.png);
 }
 
 #TitleBar[active="false"] #MaximizeButton
 {
-    qproperty-pixmap: url(:/decorations/styleable/images/maximize_unfocused.png);
+    qproperty-pixmap: url(:/styles/Ubuntu/images/maximize_unfocused.png);
 }
 
 #ButtonContainer {
