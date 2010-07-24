@@ -2,6 +2,8 @@
 #include "scrollareawidget.hpp"
 #include "stylepreviewframe.hpp"
 
+#include <decorations/styleable/decorationstyleloader.hpp>
+
 #include <QDir>
 #include <QDebug>
 
@@ -14,14 +16,9 @@ MainPage::MainPage()
 
     QHBoxLayout *scrollArea = (QHBoxLayout *)ui.scrollArea->widget()->layout();
 
-    QDir dir(QDir::homePath() + "/.antico/styles/");
-    foreach (const QFileInfo &dirInfo, dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+    foreach (const DecorationStyleLoader &loader, DecorationStyleLoader::styles())
     {
-        QDir styleDir(dirInfo.filePath());
-        if (!styleDir.exists("style.qss"))
-            continue;
-
-        QWidget *previewFrame = new StylePreviewFrame(styleDir.filePath("style.qss"), this);
+        QWidget *previewFrame = new StylePreviewFrame(loader.styleSheet(), this);
         scrollArea->insertWidget(0, previewFrame);
     }
 }

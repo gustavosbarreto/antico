@@ -32,12 +32,15 @@ StyleableDecoration::StyleableDecoration(Client *c, QWidget *parent)
     if (!QFile::exists(stylePath))
         qFatal("Please, launch the configapplet to choose a style");
 
-    DecorationStyleLoader loader(stylePath);
+    if (c)
+    {
+        DecorationStyleLoader loader(stylePath);
 
-    if (!loader.isValid())
-        qFatal("Invalid theme file format");
+        if (!loader.isValid())
+            qFatal("Invalid theme file format");
 
-    setStyleSheet(loader.styleSheet());
+        setStyleSheet(loader.styleSheet());
+    }
 }
 
 void StyleableDecoration::init()

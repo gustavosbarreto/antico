@@ -3,6 +3,7 @@
 #include <QResource>
 #include <QDir>
 #include <QSettings>
+#include <QDebug>
 
 class qResource: public QResource
 {
@@ -18,6 +19,9 @@ public:
 DecorationStyleLoader::DecorationStyleLoader(const QString &file)
     : _valid(true)
 {
+    qResource oldResource("/styles/");
+    QStringList oldList = oldResource.childrenList();
+
     if (!QResource::registerResource(file))
     {
         _valid = false;
@@ -25,14 +29,13 @@ DecorationStyleLoader::DecorationStyleLoader(const QString &file)
     }
 
     qResource rootResource("/styles/");
-    if (!rootResource.isValid() ||
-        rootResource.childrenList().size() != 1)
+    if (!rootResource.isValid() || oldList.size() == rootResource.childrenList().size())
     {
         _valid = false;
         return;
     }
 
-    qResource styleResource(QString("/styles/%1/").arg(rootResource.childrenList().at(0)));
+    qResource styleResource(QString("/styles/%1/").arg(rootResource.childrenList().last()));
     if (!styleResource.childrenList().contains("info.ini") ||
         !styleResource.childrenList().contains("style.qss"))
     {
