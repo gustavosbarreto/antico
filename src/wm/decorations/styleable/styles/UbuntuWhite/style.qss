@@ -26,6 +26,36 @@
     color: rgb(153, 149, 139);
 }
 
+#TitleBar[active="true"] #CloseButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/close.png);
+}
+
+#TitleBar[active="false"] #CloseButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/close_unfocused.png);
+}
+
+#TitleBar[active="true"] #MinimizeButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/minimize.png);
+}
+
+#TitleBar[active="false"] #MinimizeButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/minimize_unfocused.png);
+}
+
+#TitleBar[active="true"] #MaximizeButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/maximize.png);
+}
+
+#TitleBar[active="false"] #MaximizeButton
+{
+    qproperty-pixmap: url(:/styles/UbuntuWhite/images/maximize_unfocused.png);
+}
+
 #ButtonContainer {
     qproperty-marginLeft: 0;
     qproperty-marginTop: 3;
