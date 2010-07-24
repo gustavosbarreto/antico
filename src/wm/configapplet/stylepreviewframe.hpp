@@ -10,7 +10,7 @@ class StylePreviewFrame: public QFrame
     Q_OBJECT
 
 public:
-    StylePreviewFrame(const QString &fileName, QWidget *parent);
+    StylePreviewFrame(const QString &styleSheet, QWidget *parent);
 
 protected:
     virtual void resizeEvent(QResizeEvent *e);

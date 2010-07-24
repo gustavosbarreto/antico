@@ -6,14 +6,11 @@
 #include <QResizeEvent>
 #include <QCoreApplication>
 
-StylePreviewFrame::StylePreviewFrame(const QString &fileName, QWidget *parent)
+StylePreviewFrame::StylePreviewFrame(const QString &styleSheet, QWidget *parent)
     : QFrame(parent)
 {
-    QFile file(fileName);
-    file.open(QFile::ReadOnly);
-
     _window = new FakeWindow(this);
-    _window->decoration()->setStyleSheet(file.readAll());
+    _window->decoration()->setStyleSheet(styleSheet);
     _window->decoration()->init();
     _window->show();
 
