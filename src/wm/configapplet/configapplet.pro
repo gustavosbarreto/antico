@@ -12,5 +12,5 @@ include(../decorations/decorations.pri)
 
 # Input
 HEADERS += mainpage.hpp fakewindow.hpp ../decoration.hpp scrollareawidget.hpp stylepreviewframe.hpp client.hpp
-FORMS += mainpage.ui
+FORMS += mainpage.ui stylepreviewframe.ui
 SOURCES += mainpage.cpp fakewindow.cpp main.cpp ../decoration.cpp scrollareawidget.cpp stylepreviewframe.cpp client.cpp

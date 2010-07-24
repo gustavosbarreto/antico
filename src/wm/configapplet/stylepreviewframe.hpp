@@ -3,6 +3,8 @@
 
 #include <QFrame>
 
+#include "ui_stylepreviewframe.h"
+
 class FakeWindow;
 
 class StylePreviewFrame: public QFrame
@@ -16,6 +18,7 @@ protected:
     virtual void resizeEvent(QResizeEvent *e);
 
 private:
+    Ui::StylePreviewFrame ui;
     FakeWindow *_window;
 };
 
