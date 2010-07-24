@@ -38,8 +38,16 @@ TitleBar::TitleBar(QWidget *parent):
     _title->setPalette(pal);
     _title->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 
-    layout->addWidget(_buttonContainer);
-    layout->addWidget(_title);
+    if (_buttonContainer->align() == "right")
+    {
+        layout->addWidget(_title);
+        layout->addWidget(_buttonContainer);
+    }
+    else if (_buttonContainer->align() == "left")
+    {
+        layout->addWidget(_buttonContainer);
+        layout->addWidget(_title);
+    }
 }
 
 void TitleBar::setTitle(const QString &title)

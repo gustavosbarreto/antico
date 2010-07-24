@@ -17,6 +17,7 @@ class ButtonContainer: public QFrame
     Q_PROPERTY(int marginRight READ marginRight WRITE setMarginRight);
     Q_PROPERTY(int marginBottom READ marginBottom WRITE setMarginBottom);
     Q_PROPERTY(int spacing READ spacing WRITE setSpacing);
+    Q_PROPERTY(QString align READ align WRITE setAlign);
 
 public:
     ButtonContainer(QWidget *parent);
@@ -36,6 +37,9 @@ public:
     inline int spacing() const { return _spacing; }
     inline void setSpacing(int value) { _spacing = value; }
 
+    inline const QString &align() const { return _align; }
+    inline void setAlign(const QString &value) { _align = value; }
+
     void setActive(bool active);
 
 private:
@@ -54,6 +58,8 @@ private:
     int _marginRight;
     int _marginBottom;
     int _spacing;
+
+    QString _align;
 
 signals:
     void clicked(StyleableDecoration::ButtonType);

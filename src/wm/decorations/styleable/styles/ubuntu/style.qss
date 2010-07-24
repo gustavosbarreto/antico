@@ -61,6 +61,7 @@
     qproperty-marginRight: 0;
     qproperty-marginBottom: 1;
     qproperty-spacing: 1;
+    qproperty-align: "left";
     border-radius: 10px;
     background: qlineargradient(x1: 0, y1:0, x2: 0, y2: 1,
                                 stop: 0.0 rgb(60, 59, 55),

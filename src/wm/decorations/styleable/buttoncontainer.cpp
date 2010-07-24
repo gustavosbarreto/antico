@@ -15,6 +15,7 @@ ButtonContainer::ButtonContainer(QWidget *parent)
     , _marginRight(0)
     , _marginBottom(0)
     , _spacing(0)
+    , _align("right")
 {
     setObjectName("ButtonContainer");
     setMouseTracking(true);
