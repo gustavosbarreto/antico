@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += reallyantico
+SUBDIRS += wm
