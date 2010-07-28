@@ -11,3 +11,5 @@ SOURCES += \
   main.cpp \
   windowmanager.cpp \
   decoration.cpp
+
+TARGET = antico-wm
