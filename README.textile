@@ -1,0 +1,4 @@
+h1. About
+
+Antico is a Qt4 based Desktop Environment for Linux.
+The goal is to create a simple and fast Desktop Environment.
