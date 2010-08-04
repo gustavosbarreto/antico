@@ -1,0 +1,15 @@
+h1. About
+
+Antico is a Qt4 based Desktop Environment for Linux.
+The goal is to create a simple and fast Desktop Environment.
+
+This is a fork from the original code of Giovanni Cigala. See the Wiki for more infornation.
+
+h1. What is being done?
+
+Now, We have a three branches.
+The ‘master’ branch is a fork of the ‘hmayer/antico’ that has a fork from the original source code. In this branch was made a few bug fixes and only that. Take care, we don’t expect someone to use it.
+
+The ‘willbemaster’ branch contains a mix of the old code (original source code) with the new code. In the future, this branch will be master branch.
+
+And finally, the ‘wm’ branch is the new Window Manager of the Antico. Now the development is focused in this branch.
