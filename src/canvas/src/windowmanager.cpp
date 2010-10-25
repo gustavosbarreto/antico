@@ -1,4 +1,6 @@
 #include "windowmanager.hpp"
+#include "window.hpp"
+#include "fixx11h.h"
 
 #include <QWebView>
 #include <QDesktopWidget>
@@ -10,7 +12,10 @@
 #include <X11/extensions/shape.h>
 #include <X11/extensions/Xcomposite.h>
 
-static WindowManager *instance = 0;
+static Core::WindowManager *instance = 0;
+
+namespace Core
+{
 
 void WindowManager::init()
 {
@@ -70,16 +75,41 @@ bool WindowManager::x11EventFilter(_XEvent *event)
     {
         case ClientMessage:
         case CreateNotify:
+        {
+            if (event->xcreatewindow.window == webView->winId())
+                return false;
+            
+            return true;
+        }
         case DestroyNotify:
+            break;
         case ConfigureNotify:
+            break;
         case ConfigureRequest:
+            break;
         case ReparentNotify:
+            break;
         case MapRequest:
+        {
+            // add window
+            Core::CWindow *c = new Core::CWindow(event->xmaprequest.window);
+
+            XAddToSaveSet(display, event->xmaprequest.window);
+            XMapWindow(display, event->xmaprequest.window);
+
+            c->grabPixmap();
+
+            return true;
+        }
         case MapNotify:
+            break;
         case UnmapNotify:
+            break;
         case PropertyNotify:
+            break;
         case FocusIn:
         case FocusOut:
+            break;
         default:
             return false;
     }
@@ -143,8 +173,8 @@ bool WindowManager::registerWindowManager()
                                   &attrs);
 
     Atom atom = XInternAtom(display, QString("WM_S%1").arg(QX11Info::appScreen()).toUtf8().data(), False);
-    if (!XSetSelectionOwner(display, atom, window, 0))
-        return false;
+//    if (!XSetSelectionOwner(display, atom, window, 0))
+//        return false;
     return true;
 }
 
@@ -155,8 +185,8 @@ bool WindowManager::registerCompositeManager()
                                         None, None);
 
     Atom atom = XInternAtom(display, QString("_NET_WM_CM_S%1").arg(QX11Info::appScreen()).toUtf8().data(), False);
-    if (!XSetSelectionOwner(display, atom, window, 0))
-        return false;
+//    if (!XSetSelectionOwner(display, atom, window, 0))
+//        return false;
     return true;
 }
 
@@ -169,12 +199,11 @@ bool WindowManager::createOverlay()
     webView = new QWebView();
     webView->setWindowFlags(Qt::X11BypassWindowManagerHint);
     webView->resize(QDesktopWidget().availableGeometry().size());
-    webView->show();
 
     XReparentWindow(display, webView->winId(), overlayWindow, 0, 0);
 
     allowInputThroughOverlay(overlayWindow);
-    allowInputThroughOverlay(webView->winId());
+    //allowInputThroughOverlay(webView->winId());
 
     return true;
 }
@@ -186,4 +215,6 @@ void WindowManager::allowInputThroughOverlay(Qt::HANDLE window)
     XFixesSetWindowShapeRegion(display, window, ShapeBounding, 0, 0, 0);
     XFixesSetWindowShapeRegion(display, window, ShapeInput, 0, 0, 0);
     XFixesDestroyRegion(display, region);
+}
+
 }

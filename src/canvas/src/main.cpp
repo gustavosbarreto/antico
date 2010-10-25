@@ -1,5 +1,6 @@
 #include <QApplication>
 
+#include "window.hpp"
 #include "windowmanager.hpp"
 
 static QCoreApplication::EventFilter oldEventFilter = NULL;
@@ -7,7 +8,7 @@ static QCoreApplication::EventFilter oldEventFilter = NULL;
 bool x11EventFilter(void *message, long *result)
 {
     XEvent *event = reinterpret_cast<XEvent *>(message);
-    if (WindowManager::self()->x11EventFilter(event))
+    if (Core::WindowManager::self()->x11EventFilter(event))
         return true;
 
     if (oldEventFilter && oldEventFilter(message, result))
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
 
     oldEventFilter = app.setEventFilter(x11EventFilter);
 
-    WindowManager::self()->init();
+    Core::WindowManager::self()->init();
 
     return app.exec();
 }

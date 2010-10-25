@@ -7,6 +7,9 @@
 class QWebView;
 union _XEvent;
 
+namespace Core
+{
+
 class WindowManager: public QObject
 {
     Q_OBJECT
@@ -50,6 +53,8 @@ private:
     void allowInputThroughOverlay(Qt::HANDLE window);
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(WindowManager::Extensions)
+}
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Core::WindowManager::Extensions)
 
 #endif
