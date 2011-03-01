@@ -1,6 +1,6 @@
 QT += dbus
 
-CONFIG += warn_on
+CONFIG += warn_on x11
 DEFINES = QT_FATAL_WARNINGS QT_NO_DEBUG_OUTPUT
 
 devel {
