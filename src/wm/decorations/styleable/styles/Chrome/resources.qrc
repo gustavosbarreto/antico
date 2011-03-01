@@ -1,6 +1,0 @@
-<RCC>
-<qresource prefix="/styles/Chrome/">
-	<file>style.qss</file>
-	<file>info.ini</file>
-</qresource>
-</RCC>

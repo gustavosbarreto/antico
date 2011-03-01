@@ -1,7 +1,0 @@
-<RCC>
-<qresource prefix="/decorations/panther/">
-    <file>images/close-btn.png</file>
-    <file>images/minimize-btn.png</file>
-    <file>images/maximize-btn.png</file>
-</qresource>
-</RCC>
