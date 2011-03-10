@@ -1,5 +1,5 @@
-// Self
-#include "task.h"
+// Lib
+#include <taskwindow.h>
 
 // Qt
 #include <QX11Info>
@@ -12,10 +12,7 @@
 // System
 #include <values.h>
 
-// Local
-
-namesp
-Task::Task(Qt::HANDLE winId, QObject *parent):
+TaskWindow::TaskWindow(Qt::HANDLE winId, QObject *parent):
     QObject(parent)
 {
 }

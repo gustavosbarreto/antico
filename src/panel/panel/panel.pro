@@ -4,8 +4,12 @@ CONFIG += link_pkgconfig debug
 
 INCLUDEPATH += ../lib/
 
-HEADERS = ../lib/paneltaskwatcher.h
-SOURCES = main.cpp \
+HEADERS = \
+  ../lib/paneltaskwatcher.h \
+  ../lib/taskwindow.h
+
+SOURCES = \
+  main.cpp \
   panel.cpp \
   paneldecoration.cpp \
   panelsettings.cpp \
