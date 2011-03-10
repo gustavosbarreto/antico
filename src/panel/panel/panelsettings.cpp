@@ -29,7 +29,7 @@ int PanelSettings::size() const
     return settings->value("Panel/size").toInt();
 }
 
-PanelWidgetPlugin::Orientation PanelSettings::orientation() const
+PanelDecoration::Orientation PanelSettings::orientation() const
 {
-    return (PanelWidgetPlugin::Orientation)settings->value("Panel/orientation").toInt();
+    return (PanelDecoration::Orientation)settings->value("Panel/orientation").toInt();
 }

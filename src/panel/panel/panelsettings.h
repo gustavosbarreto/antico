@@ -2,7 +2,7 @@
 #define _PANELSETTINGS_H
 
 // Lib
-#include <panelwidgetplugin.h>
+#include <paneldecoration.h>
 
 class QSettings;
 
@@ -14,7 +14,7 @@ public:
 
     const QString plugin() const;
     int size() const;
-    PanelWidgetPlugin::Orientation orientation() const;
+    PanelDecoration::Orientation orientation() const;
 
 private:
     QSettings *settings;

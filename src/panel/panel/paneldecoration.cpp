@@ -1,5 +1,5 @@
 // Self
-#include <panelwidgetplugin.h>
+#include <paneldecoration.h>
 
 // Own
 #include "panelsettings.h"
@@ -13,7 +13,7 @@
 #include <QFile>
 #include <QDebug>
 
-class PanelWidgetPlugin::Private
+class PanelDecoration::Private
 {
 public:
     PanelSettings *settings;
@@ -24,63 +24,63 @@ public:
     }
 };
 
-PanelWidgetPlugin::PanelWidgetPlugin()
+PanelDecoration::PanelDecoration()
     : QObject()
     , widget(NULL)
 {
     d = new Private;
 }
 
-void PanelWidgetPlugin::init()
+void PanelDecoration::init()
 {
     Q_ASSERT(widget);
-//    widget->setObjectName("Panel");
+    widget->setObjectName("Panel");
 }
 
-bool PanelWidgetPlugin::hasWidget() const
+bool PanelDecoration::hasWidget() const
 {
     return (widget != NULL);
 }
 
-int PanelWidgetPlugin::winId()
+int PanelDecoration::winId()
 {
     return widget->winId();
 }
 
-void PanelWidgetPlugin::setGeometry(const QRect &r)
+void PanelDecoration::setGeometry(const QRect &r)
 {
     widget->setGeometry(r);
 }
 
-int PanelWidgetPlugin::size()
+int PanelDecoration::size()
 {
     int size = d->settings->size();
     if (size <= 0) size = 30; // default size
     return size;
 }
 
-PanelWidgetPlugin::Orientation PanelWidgetPlugin::orientation()
+PanelDecoration::Orientation PanelDecoration::orientation()
 {
     Orientation orientation = d->settings->orientation();
     if (orientation == NoneOrientation) orientation = BottomOrientation; // default orientation
     return orientation;
 }
 
-void PanelWidgetPlugin::show()
+void PanelDecoration::show()
 {
     widget->show();
 }
 
-void PanelWidgetPlugin::addWidget(QWidget *widget)
+void PanelDecoration::addWidget(QWidget *widget)
 {
     widget->layout()->addWidget(widget);
 }
 
-void PanelWidgetPlugin::addSeparator()
+void PanelDecoration::addSeparator()
 {
 }
 
-void PanelWidgetPlugin::addStretch()
+void PanelDecoration::addStretch()
 {
     QBoxLayout *layout = static_cast<QBoxLayout *>(widget->layout());
     layout->addStretch();

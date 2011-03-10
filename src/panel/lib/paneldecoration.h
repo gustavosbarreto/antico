@@ -1,12 +1,12 @@
-#ifndef _PANELWIDGETPLUGIN_H
-#define _PANELWIDGETPLUGIN_H
+#ifndef _PANELDECORATION_H
+#define _PANELDECORATION_H
 
 #include <QObject>
 #include <QRect>
 
 class QWidget;
 
-class PanelWidgetPlugin: public QObject
+class PanelDecoration: public QObject
 {
 public:
     enum Orientation
@@ -18,7 +18,7 @@ public:
         BottomOrientation
     };
 
-    PanelWidgetPlugin();
+    PanelDecoration();
 
     void init();
     bool hasWidget() const;
@@ -38,6 +38,6 @@ protected:
     QWidget *widget;
 };
 
-Q_DECLARE_INTERFACE(PanelWidgetPlugin, "Panel/1.0")
+Q_DECLARE_INTERFACE(PanelDecoration, "Panel/1.0")
 
 #endif

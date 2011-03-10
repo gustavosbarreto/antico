@@ -10,17 +10,17 @@
 // Own
 #include "panelsettings.h"
 
-// Plugin
-#include <panelwidgetplugin.h>
+// Lib
+#include <paneldecoration.h>
 
 // X11
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 
-class MyPanelWidgetPlugin: public PanelWidgetPlugin
+class StyleSheetDecoration: public PanelDecoration
 {
 public:
-    MyPanelWidgetPlugin(): PanelWidgetPlugin()
+    StyleSheetDecoration(): PanelDecoration()
     {
         widget = new QWidget;
     }
@@ -35,7 +35,7 @@ Panel::Panel():
     {
     }
 
-    plugin = new MyPanelWidgetPlugin;
+    plugin = new StyleSheetDecoration;
     plugin->init();
 
     sendHints();
@@ -45,19 +45,19 @@ Panel::Panel():
     // Build panel geometry based on his orientation
     switch (plugin->orientation())
     {
-        case PanelWidgetPlugin::LeftOrientation:
+        case PanelDecoration::LeftOrientation:
             rect = QRect(0, 0, plugin->size(), desktop.height());
             break;
             
-        case PanelWidgetPlugin::RightOrientation:
+        case PanelDecoration::RightOrientation:
             rect = QRect(desktop.width() - plugin->size(), 0, plugin->size(), desktop.height());
             break;
 
-        case PanelWidgetPlugin::TopOrientation:
+        case PanelDecoration::TopOrientation:
             rect = QRect(0, 0, desktop.width(), plugin->size());
             break;
 
-        case PanelWidgetPlugin::BottomOrientation:
+        case PanelDecoration::BottomOrientation:
             rect = QRect(0, desktop.height() - plugin->size(), desktop.width(), plugin->size());
             break;
 
@@ -109,22 +109,22 @@ void Panel::sendHints()
 
         switch (plugin->orientation())
         {
-            case PanelWidgetPlugin::LeftOrientation:
+            case PanelDecoration::LeftOrientation:
                 struts[0] = plugin->size();
                 struts[11] = desktop.height();
                 break;
 
-            case PanelWidgetPlugin::RightOrientation:
+            case PanelDecoration::RightOrientation:
                 struts[1] = plugin->size();
                 struts[11] = desktop.height();
                 break;
 
-            case PanelWidgetPlugin::TopOrientation:
+            case PanelDecoration::TopOrientation:
                 struts[2] = plugin->size();
                 struts[11] = desktop.width();
                 break;
 
-            case PanelWidgetPlugin::BottomOrientation:
+            case PanelDecoration::BottomOrientation:
                 struts[3] = plugin->size();
                 struts[11] = desktop.width();
 

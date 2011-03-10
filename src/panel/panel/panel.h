@@ -4,7 +4,7 @@
 #include <QObject>
 
 class PanelSettings;
-class PanelWidgetPlugin;
+class PanelDecoration;
 
 class Panel: public QObject
 {
@@ -17,7 +17,7 @@ public:
 
 private:
     PanelSettings *settings;
-    PanelWidgetPlugin *plugin;
+    PanelDecoration *plugin;
 };
 
 #endif

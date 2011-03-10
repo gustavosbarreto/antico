@@ -7,6 +7,6 @@ INCLUDEPATH += ../lib/
 HEADERS = ../lib/paneltaskwatcher.h
 SOURCES = main.cpp \
   panel.cpp \
-  panelwidgetplugin.cpp \
+  paneldecoration.cpp \
   panelsettings.cpp \
   paneltaskwatcher.cpp
