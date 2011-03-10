@@ -13,4 +13,5 @@ SOURCES = \
   panel.cpp \
   paneldecoration.cpp \
   panelsettings.cpp \
-  paneltaskwatcher.cpp
+  paneltaskwatcher.cpp \
+  taskwindow.cpp

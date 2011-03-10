@@ -25,6 +25,9 @@ signals:
 private:
     class Private;
     Private *d;
+
+    void emitTaskAdded(TaskWindow *t);
+    void emitTaskRemoved(TaskWindow *t);
 };
 
 #endif

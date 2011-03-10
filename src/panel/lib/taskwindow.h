@@ -4,9 +4,6 @@
 // Qt
 #include <QObject>
 
-// X11
-#include <X11/Xlib.h>
-
 class TaskWindow: public QObject
 {
     Q_OBJECT

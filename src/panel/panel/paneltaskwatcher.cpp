@@ -1,10 +1,13 @@
 // Self
-#include "paneltaskwatcher.h"
+#include <paneltaskwatcher.h>
 
 // Qt
 #include <QApplication>
 #include <QX11Info>
 #include <QMap>
+
+// Lib
+#include <taskwindow.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -32,7 +35,7 @@ static bool x11EventFilter(void *message, long *result)
 class PanelTaskWatcher::Private
 {
 public:
-    Private()
+    Private(PanelTaskWatcher *parent): q(parent)
     {
         static const char *atoms[] = {
             "_NET_CLIENT_LIST\0"
@@ -96,10 +99,38 @@ public:
         int result = XGetWindowProperty(QX11Info::display(), winId, atom("NET_WM_WINDOW_TYPE"), 0L, sizeof(Atom), False,
                                         XA_ATOM, &typeReturned, &formatReturned, &count, &unused, &data);
         if (result != Success)
+        {
             if (data) XFree(data);
+            return None;
+        }
 
         type = *(Atom *)data;
         XFree(data);
+
+        return type;
+    }
+
+    Atom windowState(Qt::HANDLE winId)
+    {
+        Atom state = None;
+        unsigned char *data = NULL;
+        Atom typeReturned;
+        int formatReturned;
+        unsigned long count = 0;
+        unsigned long unused;
+
+        int result = XGetWindowProperty(QX11Info::display(), winId, atom("_NET_WM_STATE"), 0, 1, False, XA_ATOM,
+                                        &typeReturned, &formatReturned, &count, &unused, &data);
+        if (result != Success || data == NULL)
+        {
+            if (data) XFree(data);
+            return None;
+        }
+
+        memcpy(&state, data, sizeof(state));
+        XFree(data);
+
+        return state;
     }
 
     void updateTaskList()
@@ -122,6 +153,55 @@ public:
 
         for (int i = 0; i < (int)count; ++i)
         {
+            Atom type = windowType(clients[i]);
+            Atom state = windowState(clients[i]);
+
+            // skip
+            if (type == atom("_NET_WM_WINDOW_TYPE_DESKTOP") ||
+                type == atom("_NET_WM_WINDOW_TYPE_DOCK") ||
+                type == atom("_NET_WM_WINDOW_TYPE_SPLASH"))
+            {
+                continue;
+            }
+
+            // skip
+            if (state == atom("_NET_WM_STATE_SKIP_PAGER") ||
+                state == atom("_NET_WM_STATE_SKIP_TASKBAR") ||
+                state == atom("_NET_WM_STATE_STICKY"))
+            {
+                continue;
+            }
+
+            TaskWindow *task = tasks.value(clients[i]);
+            if (!task)
+            {
+                q->taskAdded(task); // emit
+            }
+            else
+            {
+                int *value = &refCount[task];
+                (*value)++; // Increment ref count for this task
+            }
+
+            // Remove tasks that got closed
+            // --> Yes, ref count is really fast than getting the client list from the WM
+            QMutableMapIterator<Qt::HANDLE, TaskWindow *> it(tasks);
+            while (it.hasNext())
+            {
+                it.next();
+                TaskWindow *t = it.value();
+                if (!refCount.contains(t))
+                    refCount.insert(t, 1); // initial value
+
+                int *value = &refCount[t];
+                (*value)--;
+                if ((*value) < 0)
+                {
+                    it.remove();
+                    refCount.remove(t);
+                    q->taskRemoved(t); // emit
+                }
+            }
         }
     }
 
@@ -129,7 +209,10 @@ public:
     {
     }
 
+    PanelTaskWatcher *q;
     QMap<const char *, Atom> atomMap;
+    QMap<Qt::HANDLE, TaskWindow *> tasks;
+    QMap<TaskWindow *, int> refCount;
 };
 
 bool PanelTaskWatcher::x11EventFilter(_XEvent *e)
@@ -147,7 +230,17 @@ PanelTaskWatcher *PanelTaskWatcher::instance()
 }
 
 PanelTaskWatcher::PanelTaskWatcher():
-    QObject(),
-    d(new Private)
+    QObject()
 {
+    d = new Private(this);
+}
+
+void PanelTaskWatcher::emitTaskAdded(TaskWindow *t)
+{
+    emit taskAdded(t);
+}
+
+void PanelTaskWatcher::emitTaskRemoved(TaskWindow *t)
+{
+    emit taskRemoved(t);
 }
