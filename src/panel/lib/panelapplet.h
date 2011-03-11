@@ -12,12 +12,12 @@ public:
     PanelApplet();
 
     void init();
-    bool hasWidget() const;
+    QWidget *widget();
 
 protected:
     class Private;
     Private *d;
-    QWidget *widget;
+    QWidget *myWidget;
 };
 
 Q_DECLARE_INTERFACE(PanelApplet, "Panel/1.0")

@@ -15,17 +15,19 @@ public:
 
 PanelApplet::PanelApplet()
     : QObject()
-    , widget(NULL)
+    , myWidget(NULL)
 {
     d = new Private;
 }
 
 void PanelApplet::init()
 {
-    Q_ASSERT(widget);
+    Q_ASSERT(myWidget);
 }
 
-bool PanelApplet::hasWidget() const
+QWidget *PanelApplet::widget()
 {
-    return (widget != NULL);
+    return myWidget;
 }
+
+

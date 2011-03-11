@@ -55,7 +55,7 @@ void PanelDecoration::setGeometry(const QRect &r)
 int PanelDecoration::size()
 {
     int size = d->settings->size();
-    if (size <= 0) size = 30; // default size
+    if (size <= 0) size = 26; // default size
     return size;
 }
 
@@ -71,9 +71,10 @@ void PanelDecoration::show()
     widget->show();
 }
 
-void PanelDecoration::addWidget(QWidget *widget)
+void PanelDecoration::addWidget(QWidget *w)
 {
-    widget->layout()->addWidget(widget);
+    w->setParent(widget);
+    widget->layout()->addWidget(w);
 }
 
 void PanelDecoration::addSeparator()

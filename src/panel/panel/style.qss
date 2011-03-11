@@ -1,0 +1,20 @@
+#Panel {
+  border-top: 1px solid #666666;
+  border-bottom: 1px solid #ffffff;
+  background: qlineargradient(spread: pad, x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:0.4 #cacbcb);
+}
+
+#StartMenu {
+    border: 0px;
+}
+
+#TaskList {
+}
+
+#TaskButton {
+    border: 0;
+    border-top: 1px solid #e7e7e7;
+    border-left: 1px solid #c3c3c3;
+    border-right: 1px solid #c3c3c3;
+    background: qlineargradient(spread: pad, x1:0, y1:0, x2:0, y2:1, stop:0 #e5e5e5, stop:0.4 #fdfdfd);
+}

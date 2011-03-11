@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QX11Info>
 #include <QDesktopWidget>
+#include <QHBoxLayout>
+#include <QFile>
 #include <QDebug>
 
 // Own
@@ -12,6 +14,10 @@
 
 // Lib
 #include <paneldecoration.h>
+
+// Applets
+#include <applets/startmenu/startmenuapplet.h>
+#include <applets/tasklist/tasklistapplet.h>
 
 // X11
 #include <X11/Xatom.h>
@@ -23,6 +29,15 @@ public:
     StyleSheetDecoration(): PanelDecoration()
     {
         widget = new QWidget;
+
+        QFile file(":/style.qss");
+        file.open(QFile::ReadOnly);
+        widget->setStyleSheet(file.readAll());
+
+        QHBoxLayout *layout = new QHBoxLayout();
+        layout->setContentsMargins(0, 2, 0, 0);
+        layout->setSizeConstraint(QLayout::SetNoConstraint);
+        widget->setLayout(layout);
     }
 };
 
@@ -67,6 +82,10 @@ Panel::Panel():
 
     plugin->setGeometry(rect);
     plugin->show();
+
+    plugin->addWidget((new StartMenuApplet)->widget());
+    plugin->addWidget((new TaskListApplet)->widget());
+    plugin->addStretch();
 }
 
 void Panel::sendHints()
@@ -125,7 +144,7 @@ void Panel::sendHints()
                 break;
 
             case PanelDecoration::BottomOrientation:
-                struts[3] = plugin->size();
+                struts[3] = 20;
                 struts[11] = desktop.width();
 
             default:
