@@ -50,7 +50,7 @@ void TaskButton::paintEvent(QPaintEvent *e)
     }
 
     rect.setX(point.x() + pix.width() + 4);
-    rect.setY(opt.fontMetrics.height() / 2);
+    rect.setY((geometry().height() / 2) - opt.fontMetrics.height() / 2);
 
     QString str = painter.fontMetrics().elidedText(text(), Qt::ElideRight, rect.width() - 4);
 
