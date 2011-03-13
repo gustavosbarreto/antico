@@ -1,14 +1,18 @@
 // Self
 #include "taskbutton.h"
 
+// Lib
+#include <taskwindow.h>
+
 // Qt
 #include <QPainter>
 #include <QStyleOption>
 #include <QTimer>
 #include <QDebug>
 
-TaskButton::TaskButton(QWidget *parent):
-    QPushButton(parent)
+TaskButton::TaskButton(TaskWindow *t, QWidget *parent):
+    QPushButton(parent),
+    task(t)
 {
     setObjectName("TaskButton");
 

@@ -39,5 +39,5 @@ void TaskListWidget::init()
 
 void TaskListWidget::addTaskButton(TaskWindow *task)
 {
-    qDebug("addTaskButton");
+    layout()->addWidget(new TaskButton(task, this));
 }

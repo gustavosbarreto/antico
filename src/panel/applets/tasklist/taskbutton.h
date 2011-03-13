@@ -3,12 +3,14 @@
 
 #include <QPushButton>
 
+class TaskWindow;
+
 class TaskButton: public QPushButton
 {
     Q_OBJECT
 
 public:
-    TaskButton(QWidget *parent);
+    TaskButton(TaskWindow *t, QWidget *parent);
 
 protected:
     void paintEvent(QPaintEvent *e);
@@ -16,6 +18,9 @@ protected:
 
 private slots:
     void init();
+
+private:
+    TaskWindow *task;
 };
 
 #endif
