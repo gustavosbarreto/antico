@@ -99,7 +99,7 @@ public:
         unsigned long count = 0;
         unsigned long unused;
 
-        int result = XGetWindowProperty(QX11Info::display(), winId, atom("NET_WM_WINDOW_TYPE"), 0L, sizeof(Atom), False,
+        int result = XGetWindowProperty(QX11Info::display(), winId, atom("_NET_WM_WINDOW_TYPE"), 0L, sizeof(Atom), False,
                                         XA_ATOM, &typeReturned, &formatReturned, &count, &unused, &data);
         if (result != Success)
         {
