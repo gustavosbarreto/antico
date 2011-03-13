@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QX11Info>
 #include <QMap>
+#include <QDebug>
 
 // Lib
 #include <taskwindow.h>
@@ -37,27 +38,27 @@ class PanelTaskWatcher::Private
 public:
     Private(PanelTaskWatcher *parent): q(parent)
     {
-        static const char *atoms[] = {
-            "_NET_CLIENT_LIST\0"
-            "_NET_ACTIVE_WINDOW\0"
-            "_NET_WM_WINDOW_TYPE\0"
-            "_NET_WM_WINDOW_TYPE_DESKTOP\0"
-            "_NET_WM_WINDOW_TYPE_DOCK\0"
-            "_NET_WM_WINDOW_TYPE_SPLASH\0"
-            "_NET_WM_WINDOW_TYPE_NORMAL\0"
-            "_NET_WM_WINDOW_TYPE_DIALOG\0"
-            "_NET_WM_STATE\0"
-            "_NET_WM_STATE_STICKY\0"
-            "_NET_WM_STATE_SKIP_PAGER\0"
-            "_NET_WM_STATE_SKIP_TASKBAR\0"
-            "_NET_WM_STRUT_PARTIAL\0"
-            "_NET_SYSTEM_TRAY_OPCODE\0"
-            "_NET_WM_NAME\0"
-            "_NET_WM_ICON\0"
-            "WM_DELETE_WINDOW\0"
-            "WM_PROTOCOLS\0"
-            "WM_STATE\0"
-            "UTF8_STRING\0"
+        const char *atoms[] = {
+            "_NET_CLIENT_LIST",
+            "_NET_ACTIVE_WINDOW",
+            "_NET_WM_WINDOW_TYPE",
+            "_NET_WM_WINDOW_TYPE_DESKTOP",
+            "_NET_WM_WINDOW_TYPE_DOCK",
+            "_NET_WM_WINDOW_TYPE_SPLASH",
+            "_NET_WM_WINDOW_TYPE_NORMAL",
+            "_NET_WM_WINDOW_TYPE_DIALOG",
+            "_NET_WM_STATE",
+            "_NET_WM_STATE_STICKY",
+            "_NET_WM_STATE_SKIP_PAGER",
+            "_NET_WM_STATE_SKIP_TASKBAR",
+            "_NET_WM_STRUT_PARTIAL",
+            "_NET_SYSTEM_TRAY_OPCODE",
+            "_NET_WM_NAME",
+            "_NET_WM_ICON",
+            "WM_DELETE_WINDOW",
+            "WM_PROTOCOLS",
+            "WM_STATE",
+            "UTF8_STRING"
         };
 
         int size = sizeof(atoms) / sizeof(char *);
@@ -67,6 +68,8 @@ public:
 
         for (int i = 0; i < size; ++i)
             atomMap.insert(atoms[i], atomsReturn[i]);
+
+        oldX11EventFilter = qApp->setEventFilter(::x11EventFilter);
     }
 
     const Atom &atom(const char *name)

@@ -4,6 +4,8 @@
 // Qt
 #include <QFrame>
 
+class TaskWindow;
+
 class TaskListWidget: public QFrame
 {
     Q_OBJECT
@@ -13,6 +15,7 @@ public:
 
 private slots:
     void init();
+    void addTaskButton(TaskWindow *task);
 };
 
 #endif

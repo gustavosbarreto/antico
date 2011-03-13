@@ -4,10 +4,17 @@
 // Own
 #include "taskbutton.h"
 
+// Lib
+#include <paneltaskwatcher.h>
+
 // Qt
 #include <QHBoxLayout>
 #include <QTimer>
+#include <QX11Info>
 #include <QDebug>
+
+// X11
+#include <X11/Xlib.h>
 
 TaskListWidget::TaskListWidget():
     QFrame()
@@ -24,6 +31,13 @@ TaskListWidget::TaskListWidget():
 
 void TaskListWidget::init()
 {
-    layout()->addWidget(new TaskButton(this));
-    layout()->addWidget(new TaskButton(this));
+    connect(PanelTaskWatcher::instance(), SIGNAL(taskAdded(TaskWindow *)), SLOT(addTaskButton(TaskWindow *)));
+
+    XSelectInput(QX11Info::display(), QX11Info::appRootWindow(),
+                 StructureNotifyMask | SubstructureNotifyMask | PropertyChangeMask);
+}
+
+void TaskListWidget::addTaskButton(TaskWindow *task)
+{
+    qDebug("addTaskButton");
 }
