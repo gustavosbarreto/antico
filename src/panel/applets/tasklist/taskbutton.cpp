@@ -16,7 +16,8 @@ TaskButton::TaskButton(TaskWindow *t, QWidget *parent):
 {
     setObjectName("TaskButton");
 
-    setText("Titulo");
+    connect(task, SIGNAL(titleUpdated(const QString &)), SLOT(updateTitle(const QString &)));
+    connect(task, SIGNAL(iconUpdated(const QPixmap &)), SLOT(updateIcon(const QPixmap &)));
 
     QTimer::singleShot(0, this, SLOT(init()));
 }
@@ -69,5 +70,17 @@ QSize TaskButton::sizeHint() const
 
 void TaskButton::init()
 {
+    setText(task->title());
+    setIcon(task->icon());
     setFixedHeight(parentWidget()->height());
+}
+
+void TaskButton::updateTitle(const QString &title)
+{
+    setText(title);
+}
+
+void TaskButton::updateIcon(const QPixmap &icon)
+{
+    setIcon(icon);
 }

@@ -19,6 +19,9 @@ protected:
 private slots:
     void init();
 
+    void updateTitle(const QString &title);
+    void updateIcon(const QPixmap &icon);
+
 private:
     TaskWindow *task;
 };
