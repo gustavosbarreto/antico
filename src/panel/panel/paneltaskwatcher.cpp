@@ -86,6 +86,28 @@ public:
             else if (e->xproperty.atom == atom("_NET_ACTIVE_WINDOW"))
                 updateCurrentTask();
         }
+        else
+        {
+            if (e->xproperty.atom == XA_WM_NAME  ||
+                e->xproperty.atom == atom("_NET_WM_NAME"))
+            {
+                TaskWindow *task = tasks.value(e->xproperty.window);
+                if (task)
+                {
+                    QString title = windowTitle(e->xproperty.window);
+                    task->setTitle(title);
+                }
+            }
+            else if (e->xproperty.atom == XA_WM_HINTS)
+            {
+                TaskWindow *task = tasks.value(e->xproperty.window);
+                if (task)
+                {
+                    QPixmap icon = windowIcon(e->xproperty.window);
+                    task->setIcon(icon);
+                }
+            }
+        }
 
         return false;
     }
@@ -136,6 +158,103 @@ public:
         return state;
     }
 
+    QString windowTitle(Qt::HANDLE winId)
+    {
+        QString title;
+        unsigned char *data = NULL;
+        Atom typeReturned;
+        int formatReturned;
+        unsigned long count = 0;
+        unsigned long unused;
+
+        // EWMH
+        int result = XGetWindowProperty(QX11Info::display(), winId,
+                                    atom("_NET_WM_NAME"), 0, 1024, False, atom("UTF8_STRING"),
+                                    &typeReturned, &formatReturned, &count, &unused, &data);
+        if (result == Success && typeReturned == atom("UTF8_STRING") && formatReturned == 8)
+        {
+            title = QString::fromUtf8((const char *) data);
+            XFree(data);
+        }
+        else
+        {
+            if (data)
+            {
+                XFree(data);
+                data = NULL;
+            }
+
+            // Old X stuff
+            result = XGetWindowProperty(QX11Info::display(), winId, XA_WM_NAME, 0, MAXLONG, False, XA_STRING,
+                                        &typeReturned, &formatReturned, &count, &unused, &data);
+            if (result == Success)
+            {
+                title = QString((char *) data);
+                XFree(data);
+            }
+            else if (data)
+                XFree(data);
+        }
+
+        return title;
+    }
+
+    QPixmap windowIcon(Qt::HANDLE winId)
+    {
+        unsigned char *data = NULL;
+        Atom typeReturned;
+        int formatReturned;
+        unsigned long count;
+        unsigned long unused;
+
+        QPixmap icon;
+        QSize size;
+
+        if (XGetWindowProperty(QX11Info::display(), winId, atom("_NET_WM_ICON"), 0, 1, False, XA_CARDINAL,
+                               &typeReturned, &formatReturned, &count, &unused, &data) == Success && data)
+        {
+            size.setWidth(data[0]);
+            XFree(data);
+            data = NULL;
+        }
+        else if (data)
+        {
+            XFree(data);
+            data = NULL;
+        }
+
+        if (XGetWindowProperty(QX11Info::display(), winId, atom("_NET_WM_ICON"), 1, 1, False, XA_CARDINAL,
+                           &typeReturned, &formatReturned, &count, &unused, &data) == Success && data)
+        {
+            size.setHeight(data[0]);
+            XFree(data);
+            data = NULL;
+        }
+        else if (data)
+        {
+            XFree(data);
+            data = NULL;
+        }
+
+        if (XGetWindowProperty(QX11Info::display(), winId, atom("_NET_WM_ICON"),
+                               2, size.width() * size.height(), False, XA_CARDINAL,
+                               &typeReturned, &formatReturned, &count, &unused, &data) == Success && data)
+        {
+            QImage img(data, size.width(), size.height(), QImage::Format_ARGB32);
+            icon = QPixmap::fromImage(img).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            XFree(data);
+        }
+        else
+        {
+            if (data) XFree(data);
+            icon = QPixmap();
+        }
+
+        qDebug() << size;
+
+        return icon;
+    }
+
     void updateTaskList()
     {
         Window *clients = NULL;
@@ -178,6 +297,9 @@ public:
             TaskWindow *task = tasks.value(clients[i]);
             if (!task)
             {
+                task = new TaskWindow(clients[i]);
+                task->setTitle(windowTitle(clients[i]));
+                task->setIcon(windowIcon(clients[i]));
                 q->taskAdded(task); // emit
             }
             else

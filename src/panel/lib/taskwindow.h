@@ -3,6 +3,7 @@
 
 // Qt
 #include <QObject>
+#include <QPixmap>
 
 class TaskWindow: public QObject
 {
@@ -11,9 +12,18 @@ class TaskWindow: public QObject
 public:
     TaskWindow(Qt::HANDLE winId, QObject *parent = 0);
 
+    const QString &title() const;
+    void setTitle(const QString &title);
+    const QPixmap &icon() const;
+    void setIcon(const QPixmap &icon);
+
+signals:
+    void titleUpdated(const QString &);
+    void iconUpdated(const QPixmap &);
+
 private:
     class Private;
-    const Private *d;
+    Private *d;
 };
 
 #endif
