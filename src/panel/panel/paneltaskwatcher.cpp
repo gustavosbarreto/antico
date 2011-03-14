@@ -300,6 +300,7 @@ public:
                 task = new TaskWindow(clients[i]);
                 task->setTitle(windowTitle(clients[i]));
                 task->setIcon(windowIcon(clients[i]));
+                tasks.insert(clients[i], task);
                 q->taskAdded(task); // emit
             }
             else
@@ -307,25 +308,27 @@ public:
                 int *value = &refCount[task];
                 (*value)++; // Increment ref count for this task
             }
+        }
 
-            // Remove tasks that got closed
-            // --> Yes, ref count is really fast than getting the client list from the WM
-            QMutableMapIterator<Qt::HANDLE, TaskWindow *> it(tasks);
-            while (it.hasNext())
+        // Remove tasks that got closed
+        // --> Yes, ref count is really fast than getting the client list from the WM
+        QMutableMapIterator<Qt::HANDLE, TaskWindow *> it(tasks);
+        while (it.hasNext())
+        {
+            it.next();
+            TaskWindow *t = it.value();
+            if (!refCount.contains(t))
             {
-                it.next();
-                TaskWindow *t = it.value();
-                if (!refCount.contains(t))
-                    refCount.insert(t, 1); // initial value
+                refCount.insert(t, 1); // initial value
+            }
 
-                int *value = &refCount[t];
-                (*value)--;
-                if ((*value) < 0)
-                {
-                    it.remove();
-                    refCount.remove(t);
-                    q->taskRemoved(t); // emit
-                }
+            int *value = &refCount[t];
+            (*value)--;
+            if ((*value) < 0)
+            {
+                it.remove();
+                refCount.remove(t);
+                q->taskRemoved(t); // emit
             }
         }
     }
