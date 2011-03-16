@@ -5,6 +5,7 @@
 #include "taskbutton.h"
 
 // Lib
+#include <taskwindow.h>
 #include <paneltaskwatcher.h>
 
 // Qt
@@ -32,6 +33,7 @@ TaskListWidget::TaskListWidget():
 void TaskListWidget::init()
 {
     connect(PanelTaskWatcher::instance(), SIGNAL(taskAdded(TaskWindow *)), SLOT(addTaskButton(TaskWindow *)));
+    connect(PanelTaskWatcher::instance(), SIGNAL(taskRemoved(TaskWindow *)), SLOT(removeTaskButton(TaskWindow *)));
 
     XSelectInput(QX11Info::display(), QX11Info::appRootWindow(),
                  StructureNotifyMask | SubstructureNotifyMask | PropertyChangeMask);
@@ -40,4 +42,19 @@ void TaskListWidget::init()
 void TaskListWidget::addTaskButton(TaskWindow *task)
 {
     layout()->addWidget(new TaskButton(task, this));
+}
+
+void TaskListWidget::removeTaskButton(TaskWindow *task)
+{
+    for (int i = 0; i < layout()->count(); ++i)
+    {
+        TaskButton *button = (TaskButton *)layout()->itemAt(i)->widget();
+        if (button->task() == task)
+        {
+            layout()->removeWidget(button);
+            break;
+        }
+    }
+
+//    task->deleteLater();
 }

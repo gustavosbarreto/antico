@@ -12,6 +12,8 @@ class TaskButton: public QPushButton
 public:
     TaskButton(TaskWindow *t, QWidget *parent);
 
+    TaskWindow *task();
+
 protected:
     void paintEvent(QPaintEvent *e);
     QSize sizeHint() const;
@@ -23,7 +25,8 @@ private slots:
     void updateIcon(const QPixmap &icon);
 
 private:
-    TaskWindow *task;
+    class Private;
+    Private *d;
 };
 
 #endif

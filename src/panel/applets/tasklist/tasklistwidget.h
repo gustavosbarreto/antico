@@ -15,7 +15,9 @@ public:
 
 private slots:
     void init();
+
     void addTaskButton(TaskWindow *task);
+    void removeTaskButton(TaskWindow *task);
 };
 
 #endif

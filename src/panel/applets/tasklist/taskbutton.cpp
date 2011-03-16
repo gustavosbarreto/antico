@@ -10,16 +10,29 @@
 #include <QTimer>
 #include <QDebug>
 
+class TaskButton::Private
+{
+public:
+    TaskWindow *task;
+};
+
 TaskButton::TaskButton(TaskWindow *t, QWidget *parent):
     QPushButton(parent),
-    task(t)
+    d(new Private)
 {
+    d->task = t;
+
     setObjectName("TaskButton");
 
-    connect(task, SIGNAL(titleUpdated(const QString &)), SLOT(updateTitle(const QString &)));
-    connect(task, SIGNAL(iconUpdated(const QPixmap &)), SLOT(updateIcon(const QPixmap &)));
+    connect(d->task, SIGNAL(titleUpdated(const QString &)), SLOT(updateTitle(const QString &)));
+    connect(d->task, SIGNAL(iconUpdated(const QPixmap &)), SLOT(updateIcon(const QPixmap &)));
 
     QTimer::singleShot(0, this, SLOT(init()));
+}
+
+TaskWindow *TaskButton::task()
+{
+    return d->task;
 }
 
 void TaskButton::paintEvent(QPaintEvent *e)
@@ -70,8 +83,8 @@ QSize TaskButton::sizeHint() const
 
 void TaskButton::init()
 {
-    setText(task->title());
-    setIcon(task->icon());
+    setText(d->task->title());
+    setIcon(d->task->icon());
     setFixedHeight(parentWidget()->height());
 }
 
