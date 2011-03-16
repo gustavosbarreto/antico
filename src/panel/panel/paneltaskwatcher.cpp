@@ -301,6 +301,9 @@ public:
                 task->setTitle(windowTitle(clients[i]));
                 task->setIcon(windowIcon(clients[i]));
                 tasks.insert(clients[i], task);
+
+                refCount.insert(task, 1); // initial ref count value
+
                 q->taskAdded(task); // emit
             }
             else
@@ -316,19 +319,14 @@ public:
         while (it.hasNext())
         {
             it.next();
-            TaskWindow *t = it.value();
-            if (!refCount.contains(t))
-            {
-                refCount.insert(t, 1); // initial value
-            }
 
-            int *value = &refCount[t];
+            int *value = &refCount[it.value()];
             (*value)--;
             if ((*value) < 0)
             {
                 it.remove();
-                refCount.remove(t);
-                q->taskRemoved(t); // emit
+                refCount.remove(it.value());
+                q->taskRemoved(it.value()); // emit
             }
         }
     }

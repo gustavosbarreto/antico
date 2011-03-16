@@ -12,6 +12,7 @@ class TaskWindow: public QObject
 public:
     TaskWindow(Qt::HANDLE winId, QObject *parent = 0);
 
+    Qt::HANDLE winId() const;
     const QString &title() const;
     void setTitle(const QString &title);
     const QPixmap &icon() const;

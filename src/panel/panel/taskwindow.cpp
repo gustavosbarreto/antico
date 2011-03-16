@@ -4,6 +4,7 @@
 class TaskWindow::Private
 {
 public:
+    Qt::HANDLE winId;
     QString title;
     QPixmap icon;
 };
@@ -12,6 +13,12 @@ TaskWindow::TaskWindow(Qt::HANDLE winId, QObject *parent):
     QObject(parent),
     d(new Private)
 {
+    d->winId = winId;
+}
+
+Qt::HANDLE TaskWindow::winId() const
+{
+    return d->winId;
 }
 
 const QString &TaskWindow::title() const
