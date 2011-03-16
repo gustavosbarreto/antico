@@ -320,13 +320,14 @@ public:
         {
             it.next();
 
-            int *value = &refCount[it.value()];
+            TaskWindow *t = it.value();
+            int *value = &refCount[t];
             (*value)--;
             if ((*value) < 0)
             {
                 it.remove();
-                refCount.remove(it.value());
-                q->taskRemoved(it.value()); // emit
+                refCount.remove(t);
+                q->taskRemoved(t); // emit
             }
         }
     }

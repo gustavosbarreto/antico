@@ -34,9 +34,6 @@ void TaskListWidget::init()
 {
     connect(PanelTaskWatcher::instance(), SIGNAL(taskAdded(TaskWindow *)), SLOT(addTaskButton(TaskWindow *)));
     connect(PanelTaskWatcher::instance(), SIGNAL(taskRemoved(TaskWindow *)), SLOT(removeTaskButton(TaskWindow *)));
-
-    XSelectInput(QX11Info::display(), QX11Info::appRootWindow(),
-                 StructureNotifyMask | SubstructureNotifyMask | PropertyChangeMask);
 }
 
 void TaskListWidget::addTaskButton(TaskWindow *task)
